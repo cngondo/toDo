@@ -1,8 +1,10 @@
 package example.ngondo.todo;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,8 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import example.ngondo.todo.db.TaskContract;
+import example.ngondo.todo.db.TaskDBHelper;
+
 public class Home extends AppCompatActivity {
-    final Context context = this;
+    Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +36,24 @@ public class Home extends AppCompatActivity {
                 //Launch a dialog to add new task
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                 dialog.setTitle("Add a new Task");
-                dialog.setMessage("Waht do you want to do?");
+                dialog.setMessage("What do you want to do?");
 
                 final EditText input = new EditText(context);
                 dialog.setView(input);
                 dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        Log.d("MainActivity", input.getText().toString());
+                        String task = input.getText().toString();
+                        Log.d("Home", task);
+
+                        TaskDBHelper taskDBHelper = new TaskDBHelper(Home.this);
+                        SQLiteDatabase db = taskDBHelper.getWritableDatabase();
+                        ContentValues values = new ContentValues();
+
+                        values.clear();
+                        values.put(TaskContract.Columns.TASK, task);
+                        db.insertWithOnConflict(TaskContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+
                     }
                 });
                 dialog.setNegativeButton("Cancel", null);

@@ -1,9 +1,11 @@
 package example.ngondo.todo;
 
 import android.app.AlertDialog;
+import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,19 +17,22 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
 
 import example.ngondo.todo.db.TaskContract;
 import example.ngondo.todo.db.TaskDBHelper;
 
-public class Home extends AppCompatActivity {
+public class Home extends ListActivity {
     Context context = this;
+    TaskDBHelper taskDBHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+        updateUI();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -46,20 +51,36 @@ public class Home extends AppCompatActivity {
                         String task = input.getText().toString();
                         Log.d("Home", task);
 
-                        TaskDBHelper taskDBHelper = new TaskDBHelper(Home.this);
+                        taskDBHelper = new TaskDBHelper(Home.this);
                         SQLiteDatabase db = taskDBHelper.getWritableDatabase();
                         ContentValues values = new ContentValues();
 
                         values.clear();
                         values.put(TaskContract.Columns.TASK, task);
                         db.insertWithOnConflict(TaskContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-
                     }
                 });
                 dialog.setNegativeButton("Cancel", null);
                 dialog.create().show();
             }
         });
+    }
+
+    private void updateUI(){
+        taskDBHelper = new TaskDBHelper(Home.this);
+        SQLiteDatabase sqlDB = taskDBHelper.getReadableDatabase();
+        Cursor cursor = sqlDB.query(TaskContract.TABLE, new String[]{TaskContract.Columns._ID,
+                TaskContract.Columns.TASK}, null, null, null, null, null);
+
+        SimpleCursorAdapter listAdapter = new SimpleCursorAdapter(
+                context,
+                R.layout.tasks_view,
+                cursor,
+                new String[]{TaskContract.Columns.TASK},
+                new int[]{R.id.taskTextView},
+                0
+        );
+        this.setListAdapter(listAdapter);
     }
 
     @Override
@@ -83,4 +104,6 @@ public class Home extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

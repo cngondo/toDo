@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ToDo</string>
+    <string name="app_name">Faire</string>
     <string name="action_settings">Settings</string>
     <string name="d">DONE</string>
     <string name="Add">Add Task</string>

@@ -9,7 +9,6 @@ import android.util.Log;
  * Created by ngondo on 2/15/16.
  */
 public class TaskDBHelper extends SQLiteOpenHelper {
-    SQLiteDatabase sqlDB;
 
     public TaskDBHelper(Context context){
         super(context, TaskContract.DB_NAME, null, TaskContract.DB_VERSION);
@@ -24,12 +23,12 @@ public class TaskDBHelper extends SQLiteOpenHelper {
                 TaskContract.Columns.TASK);
 
         Log.d("TaskDBHelper", "Query to form table: " + sqlQuery);
-        sqlDB.execSQL(sqlQuery);
+        sqLiteDatabase.execSQL(sqlQuery);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqlDB.execSQL("DROP TABLE IF EXISTS" + TaskContract.TABLE);
-        onCreate(sqlDB);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS" + TaskContract.TABLE);
+        onCreate(sqLiteDatabase);
     }
 }

@@ -21,6 +21,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import example.ngondo.todo.db.TaskContract;
@@ -112,5 +113,22 @@ public class Home extends AppCompatActivity {
             default:
                 return false;
         }
+    }
+
+    public void onDoneClick(View view){
+        //Invoked method from getting the view
+        View v = (View) view.getParent();
+        TextView tv = (TextView) v.findViewById(R.id.taskTextView);
+        String task = tv.getText().toString();
+
+        String deletequery = String.format("DELETE FROM %s WHERE %s = '%s'",
+                TaskContract.TABLE,
+                TaskContract.Columns.TASK,
+                task);
+
+        taskDBHelper = new TaskDBHelper(Home.this);
+        SQLiteDatabase sqlDB = taskDBHelper.getWritableDatabase();
+        sqlDB.execSQL(deletequery);
+        updateUI();
     }
 }

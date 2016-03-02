@@ -12,6 +12,12 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+    
+    <style name="myDialog" parent="android:Theme.Material.Light.Dialog">
+        <item name="android:windowBackground">@color/accent</item>
+        <item name="android:colorForeground">@color/icons</item>
+        <item name="android:textColor">@color/icons</item>
+    </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

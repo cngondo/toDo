@@ -47,8 +47,8 @@ public class Home extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //popup the dialog
-                final Dialog addDialog = new Dialog(Home.this);
+                //popup the custom dialog with its style
+                final Dialog addDialog = new Dialog(Home.this, R.style.myDialog);
                 addDialog.setContentView(R.layout.add_task);
                 /*
                 * Note that the view for the dialog belongs to the dialog, therefore
@@ -57,6 +57,9 @@ public class Home extends AppCompatActivity {
                 final EditText input = (EditText) addDialog.findViewById(R.id.task);
                 final Button addTask = (Button) addDialog.findViewById(R.id.addbutton);
                 final Button cancel = (Button) addDialog.findViewById(R.id.cancelButton);
+
+                addDialog.setTitle("What do you want to do?");
+
                 //add a task to the DB
                 addTask.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -64,8 +67,8 @@ public class Home extends AppCompatActivity {
                         //convert the text to string
                         String task = input.getText().toString();
                         Log.d("Home", task);
-
-                        if(task == null){
+                        //Check for null entries
+                        if(task.trim().length() == 0){
                             Toast.makeText(Home.this,"Cannot Enter Empty task",Toast.LENGTH_LONG).show();
                             updateUI();
                         }else{

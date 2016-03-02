@@ -1,18 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/accent">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/task"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="88dp"
+        android:textColor="@color/icons"
+        android:layout_margin="@dimen/activity_horizontal_margin"/>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-            android:layout_gravity="center_horizontal" />
-    </LinearLayout>
+    <Button
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/add"
+        android:textColor="@color/icons"
+        android:id="@+id/addbutton"
+        android:layout_below="@+id/task"
+        android:layout_alignRight="@+id/task"
+        android:layout_alignEnd="@+id/task"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+
+    <Button
+        android:layout_width="@dimen/button_width"
+        android:layout_height="@dimen/button_height"
+        android:text="@string/C"
+        android:id="@+id/cancelButton"
+        android:textColor="@color/icons"
+        android:layout_alignTop="@+id/addbutton"
+        android:layout_toLeftOf="@+id/addbutton"
+        android:layout_toStartOf="@+id/addbutton"
+        style="?android:attr/borderlessButtonStyle"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
+
+
+
 </RelativeLayout>

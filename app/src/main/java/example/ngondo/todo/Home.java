@@ -1,21 +1,25 @@
 package example.ngondo.todo;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ListActivity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -37,15 +41,61 @@ public class Home extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         updateUI();
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-    }
 
+        //Add a task to do
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //popup the dialog
+                final Dialog addDialog = new Dialog(Home.this);
+                addDialog.setContentView(R.layout.add_task);
+                /*
+                * Note that the view for the dialog belongs to the dialog, therefore
+                * The content cannot be declared explicitly but must be within the dialog
+                * */
+                final EditText input = (EditText) addDialog.findViewById(R.id.task);
+                final Button addTask = (Button) addDialog.findViewById(R.id.addbutton);
+                final Button cancel = (Button) addDialog.findViewById(R.id.cancelButton);
+                //add a task to the DB
+                addTask.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //convert the text to string
+                        String task = input.getText().toString();
+                        Log.d("Home", task);
+
+                        if(task == null){
+                            Toast.makeText(Home.this,"Cannot Enter Empty task",Toast.LENGTH_LONG).show();
+                            updateUI();
+                        }else{
+                            //open the DB
+                            taskDBHelper = new TaskDBHelper(Home.this);
+                            SQLiteDatabase db = taskDBHelper.getWritableDatabase();
+                            ContentValues values = new ContentValues();
+
+                            values.clear();
+                            values.put(TaskContract.Columns.TASK, task);
+                            db.insertWithOnConflict(TaskContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+
+                            updateUI();
+                            addDialog.dismiss();
+                        }
+                    }
+                });
+                //dismiss the dialog
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addDialog.dismiss();
+                    }
+                });
+                //show the dialog
+                addDialog.show();
+            }
+        });
+    }
+    //Method called to update the UI whenever a change occurs in the db
     private void updateUI(){
         taskDBHelper = new TaskDBHelper(Home.this);
         SQLiteDatabase sqlDB = taskDBHelper.getReadableDatabase();
@@ -61,6 +111,7 @@ public class Home extends AppCompatActivity {
                 0
         );
         ListView listview = (ListView) findViewById(R.id.list);
+        listview.setMinimumHeight(50);
         listview.setAdapter(listAdapter);
     }
 
@@ -82,26 +133,24 @@ public class Home extends AppCompatActivity {
             case R.id.action_add_task:
                 //Launch a dialog to add new task
                 AlertDialog.Builder dialog = new AlertDialog.Builder(Home.this);
-                dialog.setTitle("Add a new Task");
-                dialog.setMessage("What do you want to do?");
-
-                final EditText input = new EditText(Home.this);
-                dialog.setView(input);
+//                final EditText inputyey = new EditText(Home.this);
+//                dialog.setView(input);
                 dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        String task = input.getText().toString();
-                        Log.d("Home", task);
-
-                        taskDBHelper = new TaskDBHelper(Home.this);
-                        SQLiteDatabase db = taskDBHelper.getWritableDatabase();
-                        ContentValues values = new ContentValues();
-
-                        values.clear();
-                        values.put(TaskContract.Columns.TASK, task);
-                        db.insertWithOnConflict(TaskContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
-
-                        updateUI();
+//                        //convert the text to string
+//                        String task = input.getText().toString();
+//                        Log.d("Home", task);
+//                        //open the DB
+//                        taskDBHelper = new TaskDBHelper(Home.this);
+//                        SQLiteDatabase db = taskDBHelper.getWritableDatabase();
+//                        ContentValues values = new ContentValues();
+//
+//                        values.clear();
+//                        values.put(TaskContract.Columns.TASK, task);
+//                        db.insertWithOnConflict(TaskContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
+//
+//                        updateUI();
                     }
                 });
                 dialog.setNegativeButton("Cancel", null);

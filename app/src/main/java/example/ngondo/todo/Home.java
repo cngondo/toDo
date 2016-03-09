@@ -69,7 +69,7 @@ public class Home extends AppCompatActivity {
                         Log.d("Home", task);
                         //Check for null entries
                         if(task.trim().length() == 0){
-                            Toast.makeText(Home.this,"Cannot Enter Empty task",Toast.LENGTH_LONG).show();
+                            Snackbar.make(view ,"Sorry!! Cannot enter empty task.",Snackbar.LENGTH_LONG).show();
                             updateUI();
                         }else{
                             //open the DB
@@ -125,46 +125,16 @@ public class Home extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        switch (id) {
-            case R.id.action_add_task:
-                //Launch a dialog to add new task
-                AlertDialog.Builder dialog = new AlertDialog.Builder(Home.this);
-//                final EditText inputyey = new EditText(Home.this);
-//                dialog.setView(input);
-                dialog.setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        //convert the text to string
-//                        String task = input.getText().toString();
-//                        Log.d("Home", task);
-//                        //open the DB
-//                        taskDBHelper = new TaskDBHelper(Home.this);
-//                        SQLiteDatabase db = taskDBHelper.getWritableDatabase();
-//                        ContentValues values = new ContentValues();
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle action bar item clicks here. The action bar will
+//        // automatically handle clicks on the Home/Up button, so long
+//        // as you specify a parent activity in AndroidManifest.xml.
+//        int id = item.getItemId();
+//        //noinspection SimplifiableIfStatement
 //
-//                        values.clear();
-//                        values.put(TaskContract.Columns.TASK, task);
-//                        db.insertWithOnConflict(TaskContract.TABLE, null, values, SQLiteDatabase.CONFLICT_IGNORE);
 //
-//                        updateUI();
-                    }
-                });
-                dialog.setNegativeButton("Cancel", null);
-                dialog.create().show();
-
-                return true;
-
-            default:
-                return false;
-        }
-    }
+//    }
 
     public void onDoneClick(View view){
         //Invoked method from getting the view

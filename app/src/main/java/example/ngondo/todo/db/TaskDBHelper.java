@@ -31,4 +31,9 @@ public class TaskDBHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS" + TaskContract.TABLE);
         onCreate(sqLiteDatabase);
     }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
+    }
 }

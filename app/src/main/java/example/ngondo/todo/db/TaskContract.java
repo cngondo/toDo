@@ -10,9 +10,9 @@ public class TaskContract {
     public static final int DB_VERSION = 1;
     public static final String TABLE = "tasks";
 
+    //Inner class that defines the table contents
     public class Columns {
         public static final String TASK = "task";
         public static final String _ID = BaseColumns._ID;
     }
-
 }

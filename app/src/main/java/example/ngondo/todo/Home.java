@@ -1,32 +1,23 @@
 package example.ngondo.todo;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.ContentValues;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import example.ngondo.todo.db.TaskContract;
 import example.ngondo.todo.db.TaskDBHelper;
@@ -114,16 +105,16 @@ public class Home extends AppCompatActivity {
                 0
         );
         ListView listview = (ListView) findViewById(R.id.list);
-        listview.setMinimumHeight(50);
+        listview.setMinimumHeight(100);
         listview.setAdapter(listAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_home, menu);
+//        return true;
+//    }
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {

@@ -4,8 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/accent">
-
-
     <EditText
         android:layout_width="300dp"
         android:layout_height="wrap_content"
@@ -15,7 +13,6 @@
         android:layout_marginTop="88dp"
         android:textColor="@color/icons"
         android:layout_margin="@dimen/activity_horizontal_margin"/>
-
     <Button
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
@@ -27,7 +24,6 @@
         android:layout_alignEnd="@+id/task"
         style="?android:attr/borderlessButtonStyle"
         android:background="?attr/selectableItemBackgroundBorderless"/>
-
     <Button
         android:layout_width="@dimen/button_width"
         android:layout_height="@dimen/button_height"
@@ -39,7 +35,4 @@
         android:layout_toStartOf="@+id/addbutton"
         style="?android:attr/borderlessButtonStyle"
         android:background="?attr/selectableItemBackgroundBorderless"/>
-
-
-
 </RelativeLayout>
